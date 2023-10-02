@@ -114,6 +114,21 @@ public class Homework {
 		return count;
 	}
 	
+	public HashMap<Character, Double> sortFrequencyHashMap(HashMap<Character, Double> frequencyMap) {
+		HashMap<Character, Double> sortedFrequencies = new HashMap<Character, Double>();
+		ArrayList<Double> frequencies = new ArrayList<Double>();
+		
+		for(Map.Entry<Character, Double> entry : sortedFrequencies.entrySet()) {
+			frequencies.add(entry.getValue());
+		}
+		
+		Collections.sort(frequencies);
+		
+		for(Double num : frequencies) {
+			
+		}
+	}
+	
 	public ArrayList<Character> shiftCipherDecryption(String ciphertext) {
 		HashMap<Integer, Character> alphabet = initializeAlphabet();
 		HashMap<Character, Double> relativeFrequencies = frequencyAnalysis(ciphertext);
