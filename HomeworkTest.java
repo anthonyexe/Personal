@@ -27,9 +27,18 @@ public class HomeworkTest {
 		
 		
 		//System.out.println(hw.shiftCipherEncryption(input, key) + "\n");
-		System.out.println(hw.frequencyAnalysis(input) + "\n");
-		System.out.println(hw.shiftCipherDecryption(hw.affineCipherEncryption(input, keyArr)));
+		//System.out.println(hw.frequencyAnalysis(input) + "\n");
+		//System.out.println(hw.shiftCipherDecryption(hw.affineCipherEncryption(input, keyArr)));
 		
+		HashMap<Character, ArrayList<int[]>> temp = hw.affineCipherDecryption(hw.affineCipherEncryption(input, keyArr));
+		System.out.println(hw.affineCipherDecryption(hw.affineCipherEncryption(input, keyArr)));
+		
+		for (Entry<Character, ArrayList<int[]>> entry : temp.entrySet()) {
+			for (int i = 0; i < entry.getValue().size(); i++) {
+				for (int j = 0; j < entry.getValue().get(i).length; j++)
+				System.out.println(entry.getKey() + " : " + entry.getValue().get(i)[j]);
+			}
+		}
 		
 		
 		

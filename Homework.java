@@ -73,7 +73,6 @@ public class Homework {
 				shiftedText += " ";
 			}
 		}
-		
 		return shiftedText;
 	}
 	
@@ -212,9 +211,36 @@ public class Homework {
 		return ciphertext;
 	}
 	
-	public String affineCipherDecryption(String ciphertext) {
+	public HashMap<Character, ArrayList<int[]>> affineCipherDecryption(String ciphertext) {
 		String plaintext = " ";
 		
-		return plaintext;
+		LinkedHashMap<Character, Double> sortedRelativeFrequencies = sortFrequencyHashMap(frequencyAnalysis(ciphertext));
+		Set<Character> sortedKeys = sortedRelativeFrequencies.keySet();
+		ArrayList<Character> listOfSortedKeys = new ArrayList<Character>(sortedKeys);
+		ArrayList<Character> mostCommonChars = new ArrayList<Character>();
+		
+		for (int i = 0; i < 5; i++) {
+			mostCommonChars.add(listOfSortedKeys.get(listOfSortedKeys.size() - (1 + i)));
+		}
+		
+		HashMap<Character, ArrayList<int[]>> possibleKeys = new HashMap<Character, ArrayList<int[]>>();
+		int[] possibleKeyMultipliers = {1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25};
+		
+		for (int i = 0; i < mostCommonChars.size(); i++) {
+			int currentIndex = mostCommonChars.get(i) - 'a' + 1;
+			ArrayList<int[]> currentPossibleKeys = new ArrayList<int[]>();
+			
+			for (int j = 0; j < possibleKeyMultipliers.length; j++) {
+				for (int k = 0; k < 26; k++) {
+					if (currentIndex == ((4 * j) + k) % 26) {
+						int[] key = {j, k};
+						currentPossibleKeys.add(key);
+					}
+				}
+			}
+			possibleKeys.put(mostCommonChars.get(i), currentPossibleKeys);
+		}
+		
+		return possibleKeys;
 	}
 }
