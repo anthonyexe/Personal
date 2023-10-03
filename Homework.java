@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Map.Entry;
 import java.text.DecimalFormat;
 import java.lang.Math;
 
@@ -114,53 +115,39 @@ public class Homework {
 		return count;
 	}
 	
-	public HashMap<Character, Double> sortFrequencyHashMap(HashMap<Character, Double> frequencyMap) {
-		HashMap<Character, Double> sortedFrequencies = new HashMap<Character, Double>();
+	public LinkedHashMap<Character, Double> sortFrequencyHashMap(HashMap<Character, Double> frequencyMap) {
+		LinkedHashMap<Character, Double> sortedFrequencies = new LinkedHashMap<Character, Double>();
 		ArrayList<Double> frequencies = new ArrayList<Double>();
 		
-		for(Map.Entry<Character, Double> entry : sortedFrequencies.entrySet()) {
+		for (Map.Entry<Character, Double> entry : frequencyMap.entrySet()) {
 			frequencies.add(entry.getValue());
 		}
 		
 		Collections.sort(frequencies);
 		
-		for(Double num : frequencies) {
-			
+		for (Double value : frequencies) {
+			for(Entry<Character, Double> entry : frequencyMap.entrySet()) {
+				if (entry.getValue().equals(value)) {
+					sortedFrequencies.put(entry.getKey(), value);
+				}
+			}
 		}
+		
+		return sortedFrequencies;
+
 	}
 	
-	public ArrayList<Character> shiftCipherDecryption(String ciphertext) {
-		HashMap<Integer, Character> alphabet = initializeAlphabet();
-		HashMap<Character, Double> relativeFrequencies = frequencyAnalysis(ciphertext);
-		ArrayList<Character> mostCommonChars = new ArrayList<Character>(5);
+	public String shiftCipherDecryption(String ciphertext) {
 		String plaintext;
 		int key;
 		
-		Set<Character> keys = relativeFrequencies.keySet();
+		LinkedHashMap<Character, Double> sortedRelativeFrequencies = sortFrequencyHashMap(frequencyAnalysis(ciphertext));
+		Set<Character> sortedKeys = sortedRelativeFrequencies.keySet();
+		ArrayList<Character> listOfSortedKeys = new ArrayList<Character>(sortedKeys);
+		ArrayList<Character> mostCommonChars = new ArrayList<Character>();
 		
-		int count = 0;
-		Character greatestKey = 'a';
-		Character lastGreatestKey = null;
-		Double greatestFrequency = 0.0;
-		Integer greatestIndex;
 		for (int i = 0; i < 5; i++) {
-			for (Character currentChar : keys) {
-				if (currentChar != lastGreatestKey) {
-					if (count == 0) {
-						greatestKey = currentChar;
-						greatestFrequency = relativeFrequencies.get(currentChar);
-					}
-					else if (greatestFrequency < relativeFrequencies.get(currentChar)) {
-						greatestKey = currentChar;
-						greatestFrequency = relativeFrequencies.get(currentChar);
-					}
-				}
-				
-				count++;
-				lastGreatestKey = greatestKey;
-			}
-			mostCommonChars.add(greatestKey);
-			//keys.remove(greatestKey);
+			mostCommonChars.add(listOfSortedKeys.get(listOfSortedKeys.size() - (1 + i)));
 		}
 		
 		
@@ -184,13 +171,12 @@ public class Homework {
 			}
 		}
 		
-		
-		greatestIndex = topKey - 'a' + 1;
+		Integer greatestIndex = topKey - 'a' + 1;
 		key = Math.abs(greatestIndex - 4);
 		
 		plaintext = alphabeticShift(ciphertext, key);
 		
-		return mostCommonChars;
+		return plaintext;
 	}
 	
 	public String affineCipherEncryption(String plaintext, int[] key) {
@@ -198,9 +184,13 @@ public class Homework {
 		
 		HashMap<Integer, Character> alphabet = initializeAlphabet();
 		int[] coprimeKeys = {1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25};
-		List coprimeKeyList = Arrays.asList(coprimeKeys);
+		ArrayList<Integer> coprimeKeyList = new ArrayList<Integer>();
 		
-		if (key.length != 2 || (!coprimeKeyList.contains(key[0])) || (key[1] > 25 || key[1] < 1)) {
+		for (int i = 0; i < coprimeKeys.length; i++) {
+			coprimeKeyList.add(coprimeKeys[i]);
+		}
+		
+		if (key.length != 2 || !(coprimeKeyList.contains(key[0])) || (key[1] > 25 || key[1] < 1)) {
 			return "Invalid Key";
 		}
 		
