@@ -323,6 +323,7 @@ public class Homework {
 	}
 	
 	public String vigenereCipherEncryption(String plaintext, String key) {
+		HashMap<Integer, Character> alphabet = initializeAlphabet();
 		String ciphertext = "";
 		String fullKey = "";
 		
@@ -336,7 +337,23 @@ public class Homework {
 			fullKey += key.charAt(i);
 		}
 		
+		ArrayList<String> testing = new ArrayList<String>();
+		for (int i = 0; i < plaintext.length(); i++) {
+			Character textCurrent = plaintext.charAt(i);
+			
+			if (!Character.isWhitespace(textCurrent)) {
+				Character keyCurrent = fullKey.charAt(i);
+				int currentTextIndex = textCurrent - 'a' + 1;
+				int currentKeyIndex = keyCurrent - 'a' + 1;
+				//int newIndex = (currentTextIndex + currentKeyIndex) % 26;
+				
+				ciphertext += alphabet.get((currentTextIndex + currentKeyIndex) % 26);
+			}
+			else {
+				ciphertext += " ";
+			}
+		}
 		
-		return fullKey;
+		return ciphertext;
 	}
 }
