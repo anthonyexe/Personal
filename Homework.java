@@ -232,8 +232,8 @@ public class Homework {
 			
 			for (int j = 0; j < possibleKeyMultipliers.length; j++) {
 				for (int k = 0; k < 26; k++) {
-					if (currentIndex == ((4 * j) + k) % 26) {
-						int[] key = {j, k};
+					if (4 == ((currentIndex * possibleKeyMultipliers[j]) + k) % 26) {
+						int[] key = {possibleKeyMultipliers[j], k};
 						currentPossibleKeys.add(key);
 					}
 				}
@@ -242,5 +242,66 @@ public class Homework {
 		}
 		
 		return possibleKeys;
+	}
+	
+	public int modMultiplicativeInverse(int num) {
+		int inverse = 1;
+		
+		for (int i = 1; i < 26; i++) {
+			if (((num % 26) * (i % 26)) % 26 == 1) {
+				inverse =  i;
+				return inverse;
+			}
+		}
+		return inverse;
+	}
+	
+	public String bruteForceAffineCipherDecryption(String ciphertext) {
+		String plaintext = "";
+		HashMap<Integer, Character> alphabet = initializeAlphabet();
+		ArrayList<int[]> possibleKeys = new ArrayList<int[]>();
+		ArrayList<String> plaintexts = new ArrayList<String>();
+		int[] possibleMultipliers = {1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25};
+		
+		for (int i = 0; i < possibleMultipliers.length; i++) {
+			for (int j = 0; j < 26; j++) {
+				if (i == 0 && j == 0) {
+					continue;
+				}
+				else {
+					int[] tempKey = {possibleMultipliers[i], j};
+					possibleKeys.add(tempKey);
+				}
+			}
+		}
+		
+		// decryption key sum value = 26 - key[1]
+		// decryption key multiplier = multiplicative inverse
+		
+		for (int i = 0; i < possibleKeys.size(); i++) {
+			String tempPlaintext = "";
+			int[] currentKey = possibleKeys.get(i);
+			int additiveInverse = 26 - currentKey[1];
+			int multiplicativeInverse = modMultiplicativeInverse(currentKey[0]);
+			
+			for (int j = 0; j < ciphertext.length(); j++) {
+				Character current = Character.toLowerCase(ciphertext.charAt(j));
+				if (!Character.isWhitespace(current)) {
+					int currentIndex = current - 'a' + 1;
+					int shiftedIndex = (current + additiveInverse) * multiplicativeInverse;
+					
+					Character shiftedChar = alphabet.get(shiftedIndex);
+					tempPlaintext += shiftedChar;
+				}
+				else {
+					tempPlaintext += " ";
+				}
+			}
+			plaintexts.add(tempPlaintext);
+		}
+		
+		
+		
+		return plaintext;
 	}
 }

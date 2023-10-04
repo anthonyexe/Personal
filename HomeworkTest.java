@@ -31,15 +31,15 @@ public class HomeworkTest {
 		//System.out.println(hw.shiftCipherDecryption(hw.affineCipherEncryption(input, keyArr)));
 		
 		HashMap<Character, ArrayList<int[]>> temp = hw.affineCipherDecryption(hw.affineCipherEncryption(input, keyArr));
-		System.out.println(hw.affineCipherDecryption(hw.affineCipherEncryption(input, keyArr)));
-		
+		//System.out.println(hw.affineCipherDecryption(hw.affineCipherEncryption(input, keyArr)));
+		/*
 		for (Entry<Character, ArrayList<int[]>> entry : temp.entrySet()) {
 			for (int i = 0; i < entry.getValue().size(); i++) {
 				for (int j = 0; j < entry.getValue().get(i).length; j++)
-				System.out.println(entry.getKey() + " : " + entry.getValue().get(i)[j]);
+				System.out.println(entry.getKey() + " : " + entry.getValue().get(i)[0] + "," + entry.getValue().get(i)[1] + "\n");
+				//System.out.println(entry.getKey() + " : " + entry.getValue().get(i)[1] + "\n");
 			}
-		}
-		
+		}*/
 		
 		
 		
