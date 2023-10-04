@@ -102,11 +102,17 @@ public class Homework {
 		return ciphertext;
 	}
 	
-	public int checkFrequentTwoLetterWords(String text) {
+	public int checkFrequentWords(String text) {
 		ArrayList<String> twoLetterWords = new ArrayList<String>(List.of("of", "to", "in", "it", "is", "be", "as", "at", "so", "we", "he", "by", "or", "on", "do", "if", "me", "my", "up", "an", "go", "no", "us", "am"));
+		ArrayList<String> threeLetterWords = new ArrayList<String>(List.of("the", "and", "can", "for", "you", "are", "was", "man", "she", "her", "his", "has", "had", "any", "all", "out"));
 		int count = 0;
 		
 		for (String word : twoLetterWords) {
+			if (text.contains(word))
+				count++;
+		}
+		
+		for (String word: threeLetterWords) {
 			if (text.contains(word))
 				count++;
 		}
@@ -158,7 +164,7 @@ public class Homework {
 			Integer currentKey = Math.abs(currentIndex - 4);
 			
 			plaintext = alphabeticShift(ciphertext, currentKey);
-			int currentTwoLetterFrequency = checkFrequentTwoLetterWords(plaintext);
+			int currentTwoLetterFrequency = checkFrequentWords(plaintext);
 			
 			if (i == 0) {
 				greatestTwoLetterFrequency = currentTwoLetterFrequency;
@@ -288,7 +294,7 @@ public class Homework {
 				Character current = Character.toLowerCase(ciphertext.charAt(j));
 				if (!Character.isWhitespace(current)) {
 					int currentIndex = current - 'a' + 1;
-					int shiftedIndex = (current + additiveInverse) * multiplicativeInverse;
+					int shiftedIndex = ((currentIndex + additiveInverse) * multiplicativeInverse) % 26;
 					
 					Character shiftedChar = alphabet.get(shiftedIndex);
 					tempPlaintext += shiftedChar;
@@ -300,8 +306,37 @@ public class Homework {
 			plaintexts.add(tempPlaintext);
 		}
 		
-		
+		int greatestTwoLetterFrequency = 0;
+		for (int i = 0; i < plaintexts.size(); i++) {
+			int currentTwoLetterFrequency = checkFrequentWords(plaintexts.get(i));
+			if (i == 0) {
+				greatestTwoLetterFrequency = currentTwoLetterFrequency;
+				plaintext = plaintexts.get(i);
+			}
+			else if (greatestTwoLetterFrequency < currentTwoLetterFrequency) {
+				greatestTwoLetterFrequency = currentTwoLetterFrequency;
+				plaintext = plaintexts.get(i);
+			}
+		}
 		
 		return plaintext;
+	}
+	
+	public String vigenereCipherEncryption(String plaintext, String key) {
+		String ciphertext = "";
+		String fullKey = "";
+		
+		for (int i = 0; i < plaintext.length(); i++) {
+			if (i == key.length()) {
+				i = 0;
+			}
+			 if (fullKey.length() == plaintext.length()) {
+				break;
+			}
+			fullKey += key.charAt(i);
+		}
+		
+		
+		return fullKey;
 	}
 }
