@@ -20,7 +20,7 @@ public class Homework4 {
 	public int[] feedbackCoefficientsLFSR(int degree) {
 		int[] feedbackCoefficients = new int[degree];
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Please enter either a 0 or a 1 to indicate each feedback coefficient");
+		System.out.println("Please enter either a 0 or a 1 (" + degree + ") times to indicate each feedback coefficient");
 		
 		for (int i = 0; i < feedbackCoefficients.length; i++) {
 			feedbackCoefficients[i] = scan.nextInt();
@@ -41,17 +41,30 @@ public class Homework4 {
 		int[] feedbackCoefficients = feedbackCoefficientsLFSR(degree);
 		ArrayList<Integer> keyStream = new ArrayList<Integer>(numOfBits);
 		
-		for (int i = 0; i < keyStream.size(); i++) {
+		for (int i = 0; i < numOfBits; i++) {
+			ArrayList<Integer> tempBits = new ArrayList<Integer>();
 			keyStream.add(states[states.length - 1]);
+			
 			for (int j = 1; j < states.length; j++) {
 				states[states.length - j] = states[states.length - (j + 1)];
 			}
 			
-			int temp = 0;
-			for (int k = states.length; k >= 0; k--) {
-				if ()
+			//int temp = 0;
+			for (int k = states.length - 1; k >= 0; k--) {
+				if (feedbackCoefficients[k] == 1) {
+					tempBits.add(states[k]);
+				}
+				
+				if (tempBits.size() == 2) {
+					int tempResult = exclusiveOR(tempBits.get(0), tempBits.get(1));
+					tempBits.clear();
+					tempBits.add(tempResult);
+				}
 			}
+			
+			states[0] = tempBits.get(0);
 		}
 		
+		return keyStream;
 	}
 }
