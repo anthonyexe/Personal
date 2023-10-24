@@ -45,11 +45,6 @@ public class Homework4 {
 			ArrayList<Integer> tempBits = new ArrayList<Integer>();
 			keyStream.add(states[states.length - 1]);
 			
-			for (int j = 1; j < states.length; j++) {
-				states[states.length - j] = states[states.length - (j + 1)];
-			}
-			
-			//int temp = 0;
 			for (int k = states.length - 1; k >= 0; k--) {
 				if (feedbackCoefficients[k] == 1) {
 					tempBits.add(states[k]);
@@ -60,6 +55,10 @@ public class Homework4 {
 					tempBits.clear();
 					tempBits.add(tempResult);
 				}
+			}
+			
+			for (int j = 1; j < states.length; j++) {
+				states[states.length - j] = states[states.length - (j + 1)];
 			}
 			
 			states[0] = tempBits.get(0);
