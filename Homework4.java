@@ -5,6 +5,7 @@ public class Homework4 {
 	public int[] stateLFSR(int degree) {
 		int[] states = new int[degree];
 		
+		//Loop to set initial state of LFSR (sets first element to 1 and the rest to 0)
 		for (int i = 0; i < states.length; i++) {
 			if (i == 0)
 				states[i] = 1;
@@ -23,6 +24,7 @@ public class Homework4 {
 		System.out.println("Please enter either a 0 or a 1 (" + degree + ") times to indicate each feedback coefficient");
 		
 		for (int i = 0; i < feedbackCoefficients.length; i++) {
+			System.out.print("Feed Coefficient " + i + ": ");
 			feedbackCoefficients[i] = scan.nextInt();
 		}
 		
