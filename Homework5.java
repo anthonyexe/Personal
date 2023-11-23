@@ -9,7 +9,7 @@ public class Homework5 {
 		return finalPolynomial;
 	}
 	
-	public int[] polynomialMultiplication(int[] poly1, int[] poly2, int[] irrPoly, int m) {
+	public int[] polynomialMultiplication(int[] poly1, int[] poly2, int m) {
 		final int finalMaxLength = (m * 2) - 1;
 		int[] finalPolynomial = new int[finalMaxLength];
 		
@@ -28,5 +28,15 @@ public class Homework5 {
 		}
 		
 		return finalPolynomial;
+	}
+	
+	public int[] reducedPolynomialMultiplication(int[] product, int[] irrPoly, int m) {
+		int productHighestDegree = product.length - 1;
+		
+		if (productHighestDegree >= m) {
+			
+		}
+		else
+			return product;
 	}
 }

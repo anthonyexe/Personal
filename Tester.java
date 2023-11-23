@@ -46,7 +46,7 @@ public class Tester {
 		}
 		
 		System.out.print("Polynomial 1 * Polynomial 2 = ");
-		int[] product = hw5.polynomialMultiplication(poly1, poly2, irrPoly, m);
+		int[] product = hw5.polynomialMultiplication(poly1, poly2, m);
 		int productLength = product.length;
 		for (int i = 0; i < productLength; i++) {
 			if (product[i] != 0) {
