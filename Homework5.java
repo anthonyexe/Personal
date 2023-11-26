@@ -15,8 +15,8 @@ public class Homework5 {
 		
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < m; j++) {
-				int tempIndex = (m - (i + 1)) + (m - (j + 1));
 				if (poly1[i] == 1 && poly2[j] == 1) {
+					int tempIndex = (m - (i + 1)) + (m - (j + 1));
 					finalPolynomial[(finalMaxLength - 1) - tempIndex] += 1;
 				}
 			}
@@ -32,9 +32,17 @@ public class Homework5 {
 	
 	public int[] reducedPolynomialMultiplication(int[] product, int[] irrPoly, int m) {
 		int productHighestDegree = product.length - 1;
+		int irrPolyLength = irrPoly.length;
 		
 		if (productHighestDegree >= m) {
-			
+			int degreeDifference = product.length - irrPolyLength;
+			int[] tempArray = new int[irrPolyLength + degreeDifference];
+			for (int i = 0; i < irrPolyLength; i++) {
+				if (irrPoly[i] == 1) {
+					
+					tempArray[]	
+				}
+			}
 		}
 		else
 			return product;

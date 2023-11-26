@@ -4,13 +4,12 @@ import java.util.*;
 public class Tester {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		MidtermExam ex = new MidtermExam();
 		Homework5 hw5 = new Homework5();
 		
 		
 		
 		System.out.println("Please enter the highest polynomial degree: ");
-		int m = scan.nextInt();
+		int m = scan.nextInt() + 1;
 		
 		System.out.println("Please enter the coefficients of the first polynomial starting from the left:");
 		int[] poly1 = new int[m];
@@ -27,23 +26,27 @@ public class Tester {
 		}
 		
 		System.out.println("Please enter the degree of the irreducible polynomial to be used in multiplication: ");
-		int n = scan.nextInt();
+		int n = scan.nextInt() + 1;
 		
 		System.out.println("Please enter the coefficients of the irreducible polynomial starting from the left:");
-		int[] irrPoly = new int[m];
-		for (int i = 0; i < m; i++) {
-			System.out.println("Coefficient " + (m-i) + ": ");
+		int[] irrPoly = new int[n];
+		for (int i = 0; i < n; i++) {
+			System.out.println("Coefficient " + (n-i) + ": ");
 			irrPoly[i] = scan.nextInt();
 		}
 		
 		System.out.print("Polynomial 1 + Polynomial 2 =  ");
 		int[] sum = hw5.polynomialAddition(poly1, poly2, m);
 		for (int i = 0; i < m; i++) {
-			if (i < m - 1)
-				System.out.print(sum[i] + "x^" + (m - (i + 1)) + " + ");
-			else
-				System.out.print(sum[i] +"\n");
+			if (sum[i] != 0) {
+				if (i < m - 1)
+					System.out.print("x^" + (m - (i + 1)) + " + ");
+				else
+					System.out.print(sum[i] +"\n");
+			}
 		}
+		
+		System.out.println();
 		
 		System.out.print("Polynomial 1 * Polynomial 2 = ");
 		int[] product = hw5.polynomialMultiplication(poly1, poly2, m);
