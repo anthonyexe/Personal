@@ -41,15 +41,27 @@ public class FinalExam {
 	
 	//(#2b) Square-and-Multiply Method
 	public int squareAndMultiply(int base, int exp, int mod) {
+		//Convert the given exponent value into binary and store it as a String
 		String binaryExp = Integer.toBinaryString(exp);
+		//Cast the given base value to a double in the product variable
 		double product = (double) base;
+		//Loop through the binary exponent
 		for (int i = 1; i < binaryExp.length(); i++) {
+			//Store current bit as a String
 			String currentValue = "" + binaryExp.charAt(i);
+			//Use the Integer.valueOf method to check if the current bit is equal to 1
 			if (Integer.valueOf(currentValue).equals(1))
+				/* If the current bit = 1, square the current value of the running product,
+    				multiply it by the given base value, and finally compute the result % (given mod)
+				*/
 				product = ((Math.pow(product, 2)) * base) % mod;
 			else
+				/* If the current bit does not equal 1 (== 0), square the current value of
+    				the running product and compute the result % (given mod)
+				*/
 				product = (Math.pow(product, 2)) % mod;
 		}
+		//Return the final product casted as an int
 		return (int) product;
 	}
 }
