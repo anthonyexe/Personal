@@ -57,7 +57,8 @@ def login(username, password, volume):
     driver.set_context('content')
 
     # Connect to TIL
-    driver.get('https://10.222.224.135/')
+    # TIL IP Hidden for Security
+    driver.get('https://*TIL IP*/')
     driver.maximize_window()
 
     # Click 'Accept Agreement'
