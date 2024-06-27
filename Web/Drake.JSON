@@ -1,0 +1,36 @@
+{
+	"Songs": [
+		{
+			"title": "10 Bands",
+			"quotes":[
+				{"quote":"Who you with, what you claim, I was payin' mama's rent when I was turnin' 17"},
+				{"quote":"My ex asked me where you moving, I said onto better things, yeah"}
+			]
+		},
+
+		{
+			"title": "Headlines",
+			"quotes":[
+				{"quote":"I might be too strung out on compliments, overdosed on confidence"},
+				{"quote":"They know, they know, they know"},
+				{"quote": "Tuck my napkin in my shirt 'cause I'm just mobbin' like that"}
+			]
+		},
+
+		{
+			"title":"Passionfruit",
+			"quotes":[
+				{"quote":"Tension, between us just like picket fences"},
+				{"quote":"Harder buildin' trust from a distance"}
+			]
+		},
+
+		{
+			"title":"The Motion",
+			"quotes":[
+				{"quote":"Then their phone doesn't ring when they got everything"},
+				{"quote":"Looking back on it at least my pride is intact"}
+			]
+		}
+	]
+}
