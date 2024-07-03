@@ -1,0 +1,36 @@
+{
+	"Songs": [
+		{
+			"title": "Lose Yourself",
+			"quotes":[
+				{"quote":"His palms are sweaty, knees weak, arms are heavy, there's vomit on his sweater already, mom's spaghetti"},
+				{"quote":"God only know he's grown farther from home, he's no father, he goes home and barely knows his own daughter"}
+			]
+		},
+
+		{
+			"title": "Mockingbird",
+			"quotes":[
+				{"quote":"When I'm gone, but I'm tryin' to give you the life that I never had"},
+				{"quote":"Daddy's always on the move, Mama's always on the news"},
+				{"quote": "Now hush, little baby, don't you cry everything's gonna be alright"}
+			]
+		},
+
+		{
+			"title":"'Till I Collapse",
+			"quotes":[
+				{"quote":"Music is like magic, there's a certain feelin' you get"},
+				{"quote":"'Til the roof comes off, 'til the lights go out"}
+			]
+		},
+
+		{
+			"title":"Stan",
+			"quotes":[
+				{"quote":"Dear Slim, I wrote you, but you still ain't callin'"},
+				{"quote":"My girlfriend's jealous 'cause I talk about you 24/7 but she don't know you like I know you, Slim, no one does"}
+			]
+		}
+	]
+}

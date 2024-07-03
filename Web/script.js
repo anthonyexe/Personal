@@ -15,15 +15,29 @@ button.addEventListener("click", myFunc);
 //---------------------------------------------------
 
 //------------------ Quiz Testing -------------------
-const songQuotes = new Map();
+var songQuotes = new Array();
 var songCount = 0;
-var songTitles = new Array();
 
-async function buttonPress(element) {
-    const artistName = element.name;
-    const flag = await jsonData(artistName);
+let artist = document.getElementById("artist");
+let currentIndex, currentSong, currentQuote;
+let correctCount = 0;
+let para = document.getElementById("Quote");
+let result = document.getElementById("Result");
+let score = document.getElementById("Score");
+
+let wrongGuesses = new Array();
+
+async function buttonPress() {
+    artist.disabled = "disabled";
+    artist.style.background = "grey";
+    artistName = artist.name;
+    await jsonData(artistName);
+    //songQuotes = shuffleSongs(songQuotes);
     createButtons();
-    listQuotes();
+    currentIndex = 0;
+    currentSong = songQuotes[0][0];
+    currentQuote = songQuotes[0][1];
+    para.innerHTML = currentQuote;
 }
 
 async function jsonData(artistName) {
@@ -33,58 +47,126 @@ async function jsonData(artistName) {
     var results = JSON.parse(JSON.stringify(data));
         
     for (var x in results) {
+        //Set songCount equal to value of results
+        songCount = results[x].length;
         for (let i = 0; i < results[x].length; i++) {
-            console.log(results[x][i]["title"]);
             //Generate random number for quote array index
             var randomQuoteIndex = Math.floor(Math.random() * results[x][i]["quotes"].length);
-                //console.log(randomQuoteIndex);
-                //console.log((results[x][i]["quotes"][randomQuoteIndex].quote));
             //Set current song title value as the key and a random quote from that song as the associated value
-            songQuotes.set(results[x][i]["title"], results[x][i]["quotes"][randomQuoteIndex].quote);
-            for (let j = 0; j < results[x][i]["quotes"].length; j++) {
-                console.log(results[x][i]["quotes"][j]["quote"]);
-            }
+            songQuotes.push([results[x][i]["title"], results[x][i]["quotes"][randomQuoteIndex].quote]);
         }
     }
-    //Set songTitles array equal to array of songQuotes key values
-    songTitles = Array.from(songQuotes.keys());
-    console.log(songTitles);
-        
-    //Set songCount equal to value of songTitles length
-    songCount = songTitles.length;
-    console.log(songCount + " songs");
 
-    //Print contents of songQuotes map
-    const iter = songQuotes.entries();
-    let next = iter.next();
-    while (!next.done) {
-        console.log(next.value);
-        next = iter.next();
+    songQuotes = shuffleSongs(songQuotes);
+    for (let i = 0; i < songQuotes.length; i++) {
+        for (let j = 0; j < songQuotes[i].length; j++) {
+            console.log(songQuotes[i][j]);
+        }
     }
+}
+
+function shuffleSongs(arr) {
+    let currentIndex = songCount;
+    while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex--);
+        //console.log("random = " + randomIndex)
+        //console.log("current = " + currentIndex);
+        
+        let temp = arr[currentIndex];
+        //console.log(temp);
+        arr[currentIndex] = arr[randomIndex];
+        arr[randomIndex] = temp;
+        
+    }
+    return arr;
 }
 
 function createButtons() {
-    var docFrag = document.createDocumentFragment();
+    let titlesCopy = [];
+    for (let i = 0; i < songCount; i++) {
+        titlesCopy[i] = songQuotes[i][0];
+    }
+    titlesCopy = shuffleSongs(titlesCopy);
+
+    const newDiv = document.createElement("div");
     for (let i = 0; i < songCount; i++) {
         const newButton = document.createElement('button');
-        newButton.textContent = songTitles[i];
-        docFrag.appendChild(newButton);
+        newButton.textContent = titlesCopy[i];
+        newButton.setAttribute("onclick", "guess(this)");
+        newButton.className = "songChoices";
+        newDiv.appendChild(newButton);
+    }
+    newDiv.className = "buttonDiv";
+    document.body.appendChild(newDiv);
+}
+
+function listQuotes() {
+    const docFrag = document.createDocumentFragment();
+    for (let i = 0; i < songCount; i++) {
+        var entry = document.createElement('li');
+        entry.textContent = songQuotes[i][1];
+        docFrag.appendChild(entry);
     }
     document.body.appendChild(docFrag);
 }
 
-function listQuotes() {
-    var docFrag = document.createDocumentFragment();
-    const iter = songQuotes.entries();
-    for (let [key, value] of songQuotes) {
-        console.log(value);
-        var entry = document.createElement('li');
-        entry.textContent = value;
-        docFrag.appendChild(entry);
+function checkAnswer(element) {
+    if (element.innerHTML == currentSong) {
+        result.innerHTML = "Correct";
+        //console.log("Correct");
+        correctCount++;
+        element.disabled = "disabled";
+        element.style.background='linear-gradient(to bottom right, #6eef4780, #42f80a80)';
+    }
+    else {
+        result.innerHTML = "Incorrect";
+        wrongGuesses.push(currentSong);
+        //console.log("Incorrect");
+    }
+}
+
+function disableWrongGuesses() {
+    var buttons = document.querySelectorAll(".songChoices");
+    buttons.forEach(element => {
+        for (let i = 0; i < wrongGuesses.length; i++) {
+            if (element.innerHTML == wrongGuesses[i])
+                element.disabled = "disabled";
+        }
+    })
+}
+
+function guess(element) {
+    if (currentIndex == 0) {
+        checkAnswer(element);
+        currentIndex++;
+        currentSong = songQuotes[currentIndex][0];
+        currentQuote = songQuotes[currentIndex][1];
+        para.innerHTML = currentQuote;
     }
 
-    songQuotes.forEach((val, key) => {
-        console.log(val);
-    })
-    document.body.appendChild(docFrag);
+    else if(currentIndex + 1 < songCount) {
+        checkAnswer(element);
+        currentIndex++;
+        currentSong = songQuotes[currentIndex][0];
+        currentQuote = songQuotes[currentIndex][1];
+        para.innerHTML = currentQuote;
+    }
+    else {
+        checkAnswer(element);
+        disableWrongGuesses();
+        score.innerHTML = ((correctCount / songCount) * 100) + "%";
+    }
+}
+
+function replay() {
+    //document.getElementsByClassName("buttonDiv").remove();
+    document.querySelectorAll(".songChoices").forEach(function(c){
+        c.parentNode.removeChild(c);
+    });
+    songQuotes = [];
+    currentIndex, currentSong, currentQuote = null;
+    correctCount = 0;
+    result.innerHTML = "";
+    score.innerHTML = "";
+    buttonPress();
 }
