@@ -32,7 +32,8 @@ public class Quiz {
 		}
 	}
 	
-	public void printSongQuotes() {		System.out.println(songCount);
+	public void printSongQuotes() {
+		System.out.println(songCount);
 		for (String name: songQuotes.keySet()) {
 			String key = name.toString();
 			String[] quotes = songQuotes.get(key);
