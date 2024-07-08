@@ -6,27 +6,32 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <ul>
-		<li><a href="Quiz.html">Home</a></li>
-	</ul>
+    <header>
+		<nav>
+			<ol>
+					<a href="Quiz.html"><img src="home.png"></a>
+			</ol>
+		</nav>
+	</header>
     <hr>
 	<div id="quiz">
 		<center><h1>Drake Quiz</h1></center>
 	</div>
 
-	<center><button id="submit">Submit</button></center>
 	<center>
-		<button name="Drake" id="artist" onclick="buttonPress()">Start</button>
-		<button name="Replay" id="Replay" onclick="replay()">Replay</button>
+		<button class="gameButtons" name="Drake" id="artist" onclick="buttonPress()">Start</button>
+		<button class="gameButtons" name="Replay" id="Replay" onclick="replay()">Replay</button>
 	</center>
-	<hr>
+	
 	<center>
 		<p class="quote" id="Quote"></p>
 		<br>
 		<p id="Result"></p>
 		<br>
-		<p id="Score"></p>
 	</center>
+	<div id="buttonContainer"></div>
+	<center><h3 id="concurrentScore"></h3></center>
+	<center><h2 id="Score"></h2></center>
 
 	<script src="script.js"></script>
 </body>

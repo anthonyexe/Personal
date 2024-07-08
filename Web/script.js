@@ -1,19 +1,4 @@
 // Ant
-//-------------------- Button Testing ---------------
-var button = document.getElementById("submit");
-
-function myFunc() {
-    if (button.innerHTML === "Submit") {
-        button.innerHTML = Date();
-    }
-    else {
-        button.innerHTML = "Submit";
-    }
-}
-
-button.addEventListener("click", myFunc);
-//---------------------------------------------------
-
 //------------------ Quiz Testing -------------------
 var songQuotes = new Array();
 var songCount = 0;
@@ -24,6 +9,7 @@ let correctCount = 0;
 let para = document.getElementById("Quote");
 let result = document.getElementById("Result");
 let score = document.getElementById("Score");
+let concurrentScore = document.getElementById("concurrentScore");
 
 let wrongGuesses = new Array();
 
@@ -97,7 +83,8 @@ function createButtons() {
         newDiv.appendChild(newButton);
     }
     newDiv.className = "buttonDiv";
-    document.body.appendChild(newDiv);
+    newDiv.id = "buttonDiv";
+    document.getElementById("buttonContainer").appendChild(newDiv);
 }
 
 function listQuotes() {
@@ -156,17 +143,16 @@ function guess(element) {
         disableWrongGuesses();
         score.innerHTML = ((correctCount / songCount) * 100) + "%";
     }
+    concurrentScore.innerHTML = correctCount + "/" + songCount;
 }
 
 function replay() {
-    //document.getElementsByClassName("buttonDiv").remove();
-    document.querySelectorAll(".songChoices").forEach(function(c){
-        c.parentNode.removeChild(c);
-    });
+    document.getElementById("buttonDiv").remove();
     songQuotes = [];
     currentIndex, currentSong, currentQuote = null;
     correctCount = 0;
     result.innerHTML = "";
     score.innerHTML = "";
+    concurrentScore.innerHTML = "";
     buttonPress();
 }
