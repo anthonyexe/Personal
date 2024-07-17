@@ -1,3 +1,19 @@
+body {
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  z-index: 10;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .songChoices {
     background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
     border: 0;
@@ -18,7 +34,7 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     white-space: nowrap;
-    margin-right: 16px;
+    margin: 8px;
   }
   
   .songChoices:not([disabled]):focus {
@@ -34,6 +50,13 @@
     font-size: 36px;
   }
 
+  hr {
+    background: linear-gradient(to right, #EF4765, #FF9A5A);
+    height: 2px;
+    border: 0;
+    margin: 0px -8px 8px;
+  }
+
   .buttonDiv {
     margin: auto;
     width: 50%;
@@ -41,6 +64,10 @@
     border: 3px solid rgb(239, 71, 101);
     padding: 10px;
     text-align: center;
+  }
+
+  .home:hover {
+    transform: scale(1.2);
   }
 
   .gameButtons {
@@ -63,6 +90,7 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     white-space: nowrap;
+    margin: 8px;
   }
 
   .gameButtons:not([disabled]):focus {
@@ -71,4 +99,22 @@
   
   .gameButtons:not([disabled]):hover {
     box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+  }
+
+  @keyframes buttonShake{
+    0% {
+      transform: rotate(0deg) translateX(0px);
+    }
+    25% {
+      transform: rotate(-5deg) translateX(-5px);
+    }
+    50% {
+      transform: rotate(0deg) translateX(0px);
+    }
+    75% {
+      transform: rotate(5deg) translateX(5px);
+    }
+    100% {
+      transform: rotate(0deg) translateX(0px);
+    }
   }

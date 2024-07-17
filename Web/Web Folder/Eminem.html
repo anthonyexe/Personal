@@ -3,13 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Eminem Quiz</title>
+	<link rel="icon" type="image/x-icon" href="whiteLogo.ico">
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
 		<nav>
 			<ol>
-					<a href="Quiz.html"><img src="home.png"></a>
+					<a href="Index.html"><img class="home" src="home.png"></a>
 			</ol>
 		</nav>
 	</header>
@@ -19,14 +20,12 @@
 	</div>
 
 	<center>
-		<button class="gameButtons" name="Eminem" id="artist" onclick="buttonPress()">Start</button>
+		<button class="gameButtons" name="Eminem" id="artist" onclick="playButton()">Start</button>
 		<button class="gameButtons" name="Replay" id="Replay" onclick="replay()">Replay</button>
 	</center>
 	
 	<center>
 		<p class="quote" id="Quote"></p>
-		<br>
-		<p id="Result"></p>
 		<br>
 	</center>
 	<div id="buttonContainer"></div>
