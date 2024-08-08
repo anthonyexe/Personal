@@ -20,8 +20,18 @@
 	</div>
 
 	<center>
-		<button class="gameButtons" name="Drake" id="artist" onclick="playButton()">Start</button>
-		<button class="gameButtons" name="Replay" id="Replay" onclick="replay()">Replay</button>
+	<div class="dropdown">
+		<button class="gameButtons" name="Drake" id="play" onclick="showDropdown()">Play</button>
+		<div id="menu" class="dropdown-menu">
+			<a class="dropdown-item" href="#" onclick="playButton(3)">Easy</a>
+			<a class="dropdown-item" href="#" onclick="playButton(6)">Medium</a>
+			<a class="dropdown-item" href="#" onclick="playButton(9)">Hard</a>
+		</div>
+	</div>
+
+	<button class="gameButtons" name="Drake" id="artist" onclick="playButton()">Start</button>
+	<button class="gameButtons" name="Replay" id="Replay" onclick="replay()" disabled>Replay</button>
+		
 	</center>
 	
 	<center>

@@ -11,16 +11,36 @@ let concurrentScore = document.getElementById("concurrentScore");
 
 let wrongGuesses = new Array();
 
-async function playButton() {
+function showDropdown() {
+    //https://www.w3schools.com/howto/howto_js_dropdown.asp
+    document.getElementById("menu").classList.toggle("show");
+}
+
+async function playButton(songNum) {
+    window.onclick = function(event) {
+        if (!event.target.matches('.play')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var currentDropdown = dropdowns[i];
+                if (currentDropdown.classList.contains('show')) {
+                    currentDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+    //songCount = songNum;
+    document.getElementById("play").disabled = true;
+    document.getElementById("play").style.background = "grey";
     //Disable the play button for selected artist
-    artist.disabled = "disabled";
+    artist.disabled = true;
     //Gray out the play button
     artist.style.background = "grey";
     //Store the artist's name from HTML element
     let artistName = artist.name;
     //Pass artistName variable to the jsonData method to extract the songs/quotes from
     //the specified artist's JSON file
-    await jsonData(artistName);
+    await jsonData([artistName, songNum]);
     //Call the createButtons method to display the user's song options
     createButtons();
     currentIndex = 0;
@@ -31,11 +51,16 @@ async function playButton() {
     //Set the para element's inner HTML to the currentQuote value to display
     //the first quote to the user
     para.innerHTML = currentQuote;
+
+    document.getElementById("Replay").disabled = false;
 }
 
-async function jsonData(artistName) {
+async function jsonData(parameters) {
+    let test = parameters[0];
+    console.log(parameters[0]);
+    console.log(parameters[1]);
     //Create artistFile variable to hold the JSON file name for the specified artist
-    const artistFile = artistName + '.json';
+    const artistFile = test + '.json';
     //Variable for Promise returned by fetching of the JSON file
     const response = await fetch(artistFile);
     //Data variable to hold JSON objects
@@ -55,6 +80,21 @@ async function jsonData(artistName) {
     }
     //Shuffle the songQuotes array
     songQuotes = shuffleSongs(songQuotes);
+
+    let randomSelections = new Array();
+    for (let i = 0; i < parameters[1]; i++) {
+        let randomIndex = Math.floor(Math.random() * songQuotes.length);
+        randomSelections.push(songQuotes[randomIndex]);
+        delete songQuotes[randomIndex];
+    }
+    // Delete is removing elements but maintaining array length so random elements
+    // have the potential to be undefined --> causing errors in createButtons function
+
+    // Try to move random element to end, pop element, and repeat
+    console.log(songQuotes);
+    songQuotes = randomSelections;
+    songCount = songQuotes.length;
+    console.log(songQuotes);
 }
 
 function shuffleSongs(arr) {
@@ -168,6 +208,7 @@ function guess(element) {
     concurrentScore.innerHTML = correctCount + "/" + songCount;
 }
 
+/*
 function replay() {
     //Remove song choice buttons from previous game
     document.getElementById("buttonDiv").remove();
@@ -183,4 +224,17 @@ function replay() {
     concurrentScore.innerHTML = "";
     //Call playButton method to start new game
     playButton();
-}
+} */
+
+    function replay() {
+        para.innerHTML = "";
+        document.getElementById("buttonDiv").remove();
+        songQuotes = [];
+        currentIndex, currentSong, currentQuote = null;
+        correctCount = 0;
+        score.innerHTML = "";
+        concurrentScore.innerHTML = "";
+        document.getElementById("play").disabled = false;
+        document.getElementById("play").style.background = "linear-gradient(to bottom right, #EF4765, #FF9A5A)";
+        document.getElementById("Replay").disabled = true;
+    }
