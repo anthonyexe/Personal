@@ -22,6 +22,15 @@ action = ActionChains(driver)
 kb = Controller()
 # Create global empty string to hold volume
 volume = ''
+# Create a global variable to control what data is extracted later on
+extract = 0
+# Create global variables for each X-Ray machine to control which machine's metadata will be included in QA process
+machineCT80 = 'Y'
+machine9400 = 'Y'
+machine9800 = 'Y'
+machine6700 = 'Y'
+machineAnalogic = 'Y'
+machineCTiX = 'Y'
 # Create dictionary to hold lists of any missing images for each machine that corresponds to ECTM numbers
 missingImages = {}
 # Create list of bags
@@ -57,8 +66,7 @@ def login(username, password, volume):
     driver.set_context('content')
 
     # Connect to TIL
-    # TIL IP Hidden for Security
-    driver.get('https://*TIL IP*/')
+    driver.get('https://10.222.224.135/')
     driver.maximize_window()
 
     # Click 'Accept Agreement'
@@ -265,6 +273,12 @@ def extractScreenshots(element, currentBag, machine):
 
 
 def extractAll():
+    global machineCT80
+    global machine9400
+    global machine9800
+    global machine6700
+    global machineAnalogic
+    global machineCTiX
     # Create dictionary of dictionaries to hold machine data where keys of outer dictionary correspond to ECTM numbers
     machineData = defaultdict(dict)
     # Create table element of all ECTMs
@@ -284,37 +298,44 @@ def extractAll():
             # Add current bag to list of bags
             bags.append(currentBag)
 
-            # Call ct80MachineData method to extract & store machine data
-            ct80Data = ct80MachineData()
-            # Add ct80MachineData to dictionary of all machine data
-            machineData[currentBag]["CT80"] = ct80Data
-            ct80Element = '/html/body/table[4]/tbody/tr[10]/td[2]/img'
-            extractScreenshots(ct80Element, currentBag, 'CT80')
+            if machineCT80 == 'Y':
+                # Call ct80MachineData method to extract & store machine data
+                ct80Data = ct80MachineData()
+                # Add ct80MachineData to dictionary of all machine data
+                machineData[currentBag]["CT80"] = ct80Data
+                ct80Element = '/html/body/table[4]/tbody/tr[10]/td[2]/img'
+                extractScreenshots(ct80Element, currentBag, 'CT80')
 
-            _9400Data = _9400MachineData()
-            machineData[currentBag]["9400"] = _9400Data
-            _9400Element = '/html/body/table[4]/tbody/tr[18]/td/img'
-            extractScreenshots(_9400Element, currentBag, '9400')
+            if machine9400 == 'Y':
+                _9400Data = _9400MachineData()
+                machineData[currentBag]["9400"] = _9400Data
+                _9400Element = '/html/body/table[4]/tbody/tr[18]/td/img'
+                extractScreenshots(_9400Element, currentBag, '9400')
 
-            _9800Data = _9800MachineData()
-            machineData[currentBag]["9800"] = _9800Data
-            _9800Element = '/html/body/table[4]/tbody/tr[23]/td/img'
-            extractScreenshots(_9800Element, currentBag, '9800')
+            if machine9800 == 'Y':
+                _9800Data = _9800MachineData()
+                machineData[currentBag]["9800"] = _9800Data
+                _9800Element = '/html/body/table[4]/tbody/tr[23]/td/img'
+                extractScreenshots(_9800Element, currentBag, '9800')
 
-            _6700Data = _6700MachineData()
-            machineData[currentBag]["6700"] = _6700Data
-            _6700Element = '/html/body/table[4]/tbody/tr[28]/td/img'
-            extractScreenshots(_6700Element, currentBag, '6700')
+            if machine6700 == 'Y':
+                _6700Data = _6700MachineData()
+                machineData[currentBag]["6700"] = _6700Data
+                _6700Element = '/html/body/table[4]/tbody/tr[28]/td/img'
+                extractScreenshots(_6700Element, currentBag, '6700')
 
-            analogicData = analogicMachineData()
-            machineData[currentBag]["Analogic"] = analogicData
-            analogicElement = '/html/body/table[4]/tbody/tr[33]/td/img'
-            extractScreenshots(analogicElement, currentBag, 'Analogic')
+            if machineAnalogic == 'Y':
+                analogicData = analogicMachineData()
+                machineData[currentBag]["Analogic"] = analogicData
+                analogicElement = '/html/body/table[4]/tbody/tr[33]/td/img'
+                extractScreenshots(analogicElement, currentBag, 'Analogic')
 
-            CTiXData = CTiXMachineData()
-            machineData[currentBag]["CTiX"] = CTiXData
-            CTiXElement = '/html/body/table[4]/tbody/tr[38]/td/img'
-            extractScreenshots(CTiXElement, currentBag, 'CTiX')
+            if machineCTiX == 'Y':
+                CTiXData = CTiXMachineData()
+                machineData[currentBag]["CTiX"] = CTiXData
+                CTiXElement = '/html/body/table[4]/tbody/tr[38]/td/img'
+                extractScreenshots(CTiXElement, currentBag, 'CTiX')
+
 
         if count > 4:
             # Click next QA CAI
@@ -324,44 +345,56 @@ def extractAll():
             # Add current bag to list of bags
             bags.append(currentBag)
 
-            # Call ct80MachineData method to store extract & store machine data
-            ct80Data = ct80MachineData()
-            # Add ct80MachineData to dictionary of all machine data
-            machineData[currentBag]["CT80"] = ct80Data
-            ct80Element = '/html/body/table[4]/tbody/tr[10]/td[2]/img'
-            extractScreenshots(ct80Element, currentBag, 'CT80')
+            if machineCT80 == 'Y':
+                # Call ct80MachineData method to extract & store machine data
+                ct80Data = ct80MachineData()
+                # Add ct80MachineData to dictionary of all machine data
+                machineData[currentBag]["CT80"] = ct80Data
+                ct80Element = '/html/body/table[4]/tbody/tr[10]/td[2]/img'
+                extractScreenshots(ct80Element, currentBag, 'CT80')
 
-            _9400Data = _9400MachineData()
-            machineData[currentBag]["9400"] = _9400Data
-            _9400Element = '/html/body/table[4]/tbody/tr[18]/td/img'
-            extractScreenshots(_9400Element, currentBag, '9400')
+            if machine9400 == 'Y':
+                _9400Data = _9400MachineData()
+                machineData[currentBag]["9400"] = _9400Data
+                _9400Element = '/html/body/table[4]/tbody/tr[18]/td/img'
+                extractScreenshots(_9400Element, currentBag, '9400')
 
-            _9800Data = _9800MachineData()
-            machineData[currentBag]["9800"] = _9800Data
-            _9800Element = '/html/body/table[4]/tbody/tr[23]/td/img'
-            extractScreenshots(_9800Element, currentBag, '9800')
+            if machine9800 == 'Y':
+                _9800Data = _9800MachineData()
+                machineData[currentBag]["9800"] = _9800Data
+                _9800Element = '/html/body/table[4]/tbody/tr[23]/td/img'
+                extractScreenshots(_9800Element, currentBag, '9800')
 
-            _6700Data = _6700MachineData()
-            machineData[currentBag]["6700"] = _6700Data
-            _6700Element = '/html/body/table[4]/tbody/tr[28]/td/img'
-            extractScreenshots(_6700Element, currentBag, '6700')
+            if machine6700 == 'Y':
+                _6700Data = _6700MachineData()
+                machineData[currentBag]["6700"] = _6700Data
+                _6700Element = '/html/body/table[4]/tbody/tr[28]/td/img'
+                extractScreenshots(_6700Element, currentBag, '6700')
 
-            analogicData = analogicMachineData()
-            machineData[currentBag]["Analogic"] = analogicData
-            analogicElement = '/html/body/table[4]/tbody/tr[33]/td/img'
-            extractScreenshots(analogicElement, currentBag, 'Analogic')
+            if machineAnalogic == 'Y':
+                analogicData = analogicMachineData()
+                machineData[currentBag]["Analogic"] = analogicData
+                analogicElement = '/html/body/table[4]/tbody/tr[33]/td/img'
+                extractScreenshots(analogicElement, currentBag, 'Analogic')
 
-            CTiXData = CTiXMachineData()
-            machineData[currentBag]["CTiX"] = CTiXData
-            CTiXElement = '/html/body/table[4]/tbody/tr[38]/td/img'
-            extractScreenshots(CTiXElement, currentBag, 'CTiX')
+            if machineCTiX == 'Y':
+                CTiXData = CTiXMachineData()
+                machineData[currentBag]["CTiX"] = CTiXData
+                CTiXElement = '/html/body/table[4]/tbody/tr[38]/td/img'
+                extractScreenshots(CTiXElement, currentBag, 'CTiX')
 
         count += 1
 
     return machineData
 
 
-def extractMachine():
+def extractMachineWithoutScreenshots():
+    global machineCT80
+    global machine9400
+    global machine9800
+    global machine6700
+    global machineAnalogic
+    global machineCTiX
     # Create dictionary of dictionaries to hold machine data where keys of outer dictionary correspond to ECTM numbers
     machineData = defaultdict(dict)
     # Create table element of all ECTMs
@@ -382,37 +415,31 @@ def extractMachine():
             # Add current bag to list of bags
             bags.append(currentBag)
 
-            # Call ct80MachineData method to extract & store machine data
-            ct80Data = ct80MachineData()
-            # Add ct80MachineData to dictionary of all machine data
-            machineData[currentBag]["CT80"] = ct80Data
-            # ct80Element = '/html/body/table[4]/tbody/tr[10]/td[2]/img'
-            # extractScreenshots(ct80Element, currentBag, 'CT80')
+            if machineCT80 == 'Y':
+                # Call ct80MachineData method to extract & store machine data
+                ct80Data = ct80MachineData()
+                # Add ct80MachineData to dictionary of all machine data
+                machineData[currentBag]["CT80"] = ct80Data
 
-            _9400Data = _9400MachineData()
-            machineData[currentBag]["9400"] = _9400Data
-            # _9400Element = '/html/body/table[4]/tbody/tr[18]/td/img'
-            # extractScreenshots(_9400Element, currentBag, '9400')
+            if machine9400 == 'Y':
+                _9400Data = _9400MachineData()
+                machineData[currentBag]["9400"] = _9400Data
 
-            _9800Data = _9800MachineData()
-            machineData[currentBag]["9800"] = _9800Data
-            # _9800Element = '/html/body/table[4]/tbody/tr[23]/td/img'
-            # extractScreenshots(_9800Element, currentBag, '9800')
+            if machine9800 == 'Y':
+                _9800Data = _9800MachineData()
+                machineData[currentBag]["9800"] = _9800Data
 
-            _6700Data = _6700MachineData()
-            machineData[currentBag]["6700"] = _6700Data
-            # _6700Element = '/html/body/table[4]/tbody/tr[28]/td/img'
-            # extractScreenshots(_6700Element, currentBag, '6700')
+            if machine6700 == 'Y':
+                _6700Data = _6700MachineData()
+                machineData[currentBag]["6700"] = _6700Data
 
-            analogicData = analogicMachineData()
-            machineData[currentBag]["Analogic"] = analogicData
-            # analogicElement = '/html/body/table[4]/tbody/tr[33]/td/img'
-            # extractScreenshots(analogicElement, currentBag, 'Analogic')
+            if machineAnalogic == 'Y':
+                analogicData = analogicMachineData()
+                machineData[currentBag]["Analogic"] = analogicData
 
-            CTiXData = CTiXMachineData()
-            machineData[currentBag]["CTiX"] = CTiXData
-            # CTiXElement = '/html/body/table[4]/tbody/tr[38]/td/img'
-            # extractScreenshots(CTiXElement, currentBag, 'CTiX')
+            if machineCTiX == 'Y':
+                CTiXData = CTiXMachineData()
+                machineData[currentBag]["CTiX"] = CTiXData
 
         if count > 4:
             # Click next QA CAI
@@ -423,37 +450,31 @@ def extractMachine():
             # Add current bag to list of bags
             bags.append(currentBag)
 
-            # Call ct80MachineData method to store extract & store machine data
-            ct80Data = ct80MachineData()
-            # Add ct80MachineData to dictionary of all machine data
-            machineData[currentBag]["CT80"] = ct80Data
-            # ct80Element = '/html/body/table[4]/tbody/tr[10]/td[2]/img'
-            # extractScreenshots(ct80Element, currentBag, 'CT80')
+            if machineCT80 == 'Y':
+                # Call ct80MachineData method to extract & store machine data
+                ct80Data = ct80MachineData()
+                # Add ct80MachineData to dictionary of all machine data
+                machineData[currentBag]["CT80"] = ct80Data
 
-            _9400Data = _9400MachineData()
-            machineData[currentBag]["9400"] = _9400Data
-            # _9400Element = '/html/body/table[4]/tbody/tr[18]/td/img'
-            # extractScreenshots(_9400Element, currentBag, '9400')
+            if machine9400 == 'Y':
+                _9400Data = _9400MachineData()
+                machineData[currentBag]["9400"] = _9400Data
 
-            _9800Data = _9800MachineData()
-            machineData[currentBag]["9800"] = _9800Data
-            # _9800Element = '/html/body/table[4]/tbody/tr[23]/td/img'
-            # extractScreenshots(_9800Element, currentBag, '9800')
+            if machine9800 == 'Y':
+                _9800Data = _9800MachineData()
+                machineData[currentBag]["9800"] = _9800Data
 
-            _6700Data = _6700MachineData()
-            machineData[currentBag]["6700"] = _6700Data
-            # _6700Element = '/html/body/table[4]/tbody/tr[28]/td/img'
-            # extractScreenshots(_6700Element, currentBag, '6700')
+            if machine6700 == 'Y':
+                _6700Data = _6700MachineData()
+                machineData[currentBag]["6700"] = _6700Data
 
-            analogicData = analogicMachineData()
-            machineData[currentBag]["Analogic"] = analogicData
-            # analogicElement = '/html/body/table[4]/tbody/tr[33]/td/img'
-            # extractScreenshots(analogicElement, currentBag, 'Analogic')
+            if machineAnalogic == 'Y':
+                analogicData = analogicMachineData()
+                machineData[currentBag]["Analogic"] = analogicData
 
-            CTiXData = CTiXMachineData()
-            machineData[currentBag]["CTiX"] = CTiXData
-            # CTiXElement = '/html/body/table[4]/tbody/tr[38]/td/img'
-            # extractScreenshots(CTiXElement, currentBag, 'CTiX')
+            if machineCTiX == 'Y':
+                CTiXData = CTiXMachineData()
+                machineData[currentBag]["CTiX"] = CTiXData
 
         count += 1
 
@@ -547,7 +568,7 @@ def _9400OCR(imagePath):
         # All other values of i have an integer format; append to data list
         else:
             # Pytesseract confuses '7' with '?' sometimes; this fixes that error
-            text = text.replace("?", "7").replace("\n", "")
+            text = text.replace("?", "7").replace("W", "5").replace("\n", "")
             data.append(int(text))
 
     return data
@@ -575,9 +596,9 @@ def _9800OCR(imagePath):
         bw = cv2.threshold(resized, 170, 255, cv2.THRESH_BINARY)[1]
         # Extract text/numeric values from image
         text = pytesseract.image_to_string(bw, config=custom_config)
+        text = text.replace("\n", "")
         # i = 0 corresponds to Bag Category image
         if i == 0:
-            text = text.replace("\n", "")
             text = text.upper()
             data.append(text)
             # i = 2 corresponds to Mass which is an int format; append to data list
@@ -585,8 +606,8 @@ def _9800OCR(imagePath):
             if text == '':
                 data.append(0)
             else:
-                text = text.replace(" ", "").replace("\n", "")
-                print(text + "!")
+                text = text.replace(" ", "")
+                # print(text + "!")
                 nonChar = False
                 for j in text:
                     if not j.isdigit():
@@ -599,19 +620,19 @@ def _9800OCR(imagePath):
                     text = pytesseract.image_to_string(bw2, config=custom_config)
                     # cv2.imshow('image', bw2)
                     # cv2.waitKey()
-                    print(text)
+                    # print(text)
                     data.append(int(text))
                 else:
                     # cv2.imshow('image', bw)
                     # cv2.waitKey()
-                    print(text)
+                    # print(text)
                     data.append(int(text))
         # i = 3 corresponds with density value which is a float format; append to data list
         elif i == 3:
             if text == '':
                 data.append(0)
             else:
-                text = text.replace("]", "1").replace("\n", "").replace(".", "")
+                text = text.replace("]", "1").replace(".", "")
                 text = text[0] + '.' + text[1:len(text)]
                 data.append(float(text))
         # i = 5 corresponds with file name which is normally an int; append to data list,
@@ -620,6 +641,7 @@ def _9800OCR(imagePath):
             if text == '':
                 data.append(0)
             else:
+                text = text.replace("]", "1")
                 data.append(int(text))
         # All other values of i have an integer format; append to data list
         else:
@@ -641,6 +663,7 @@ def _6700OCR(imagePath):
     cropped_image8 = img[1027:1051, 538:680]  # Mass
     cropped_image9 = img[108:122, 60:75]  # Threat count
     cropped_image10 = img[345:360, 1618:1689]  # File name
+    # maxAlarmCount = 0
     images = [cropped_image1, cropped_image2, cropped_image3, cropped_image4, cropped_image5,
               cropped_image6, cropped_image7, cropped_image8, cropped_image9, cropped_image10]
 
@@ -694,6 +717,9 @@ def _6700OCR(imagePath):
                     data.append(0)
             # For all other values, simply append the integer values of the text to the data list
             else:
+                #if "I" in text or "l" in text:
+                text = text.replace("I", "1").replace("l", "1").replace("\n", "").replace("(", "").replace(")", "")
+                #print(text)
                 data.append(int(text))
 
     return data
@@ -710,7 +736,7 @@ def analogicOCR(imagePath):
     # Extract text/numeric values from image
     text = pytesseract.image_to_string(bw, config=custom_config)
     # Remove any occurrences of " " and "\n"
-    text = text.replace(" ", "").replace("\n", "").replace("|", "1").replace("O", "0").replace("]", "1").replace("/", "7")
+    text = text.replace(" ", "").replace("\n", "").replace("|", "1").replace("O", "0").replace("]", "1").replace("/", "7").replace("A", "4")
     # Pytesseract adds an extra character to the end of the string sometimes; in the case that text is
     # longer than 4 characters, remove the end character until the length is equal to 4
     while len(text) > 4:
@@ -743,15 +769,19 @@ def CTiXOCR(imagePath):
 
 def imageProcessComparison():
     global bags
-    machineData = extractMachine()
+    global extract
+    if extract == 1:
+        machineData = extractAll()
+    else:
+        machineData = extractMachineWithoutScreenshots()
     # machineData = extractAll()
     imageData = defaultdict(dict)
     results = defaultdict(dict)
     # Test Print
     # ----------------------------------------
-    for keys,values in machineData.items():
-        print(keys)
-        print(values)
+    # for keys,values in machineData.items():
+        # print(keys)
+        # print(values)
     # ----------------------------------------
     for bag in bags:
         print(bag)
@@ -766,15 +796,35 @@ def imageProcessComparison():
         if os.path.exists(ct80FilePath):
             CT80Data = ct80OCR(ct80FilePath)
             imageData[bag]["CT80"] = CT80Data
+        else:
+            if bag not in missingImages.keys():
+                missingImages[bag] = ["CT80"]
+            else:
+                missingImages[bag].append("CT80")
         if os.path.exists(_9400FilePath):
             _9400Data = _9400OCR(_9400FilePath)
             imageData[bag]["9400"] = _9400Data
+        else:
+            if bag not in missingImages.keys():
+                missingImages[bag] = ["9400"]
+            else:
+                missingImages[bag].append("9400")
         if os.path.exists(_9800FilePath):
             _9800Data = _9800OCR(_9800FilePath)
             imageData[bag]["9800"] = _9800Data
+        else:
+            if bag not in missingImages.keys():
+                missingImages[bag] = ["9800"]
+            else:
+                missingImages[bag].append("9800")
         if os.path.exists(_6700FilePath):
             _6700Data = _6700OCR(_6700FilePath)
             imageData[bag]["6700"] = _6700Data
+        else:
+            if bag not in missingImages.keys():
+                missingImages[bag] = ["6700"]
+            else:
+                missingImages[bag].append("6700")
         if os.path.exists(analogicFilePath):
             analogicData = analogicOCR(analogicFilePath)
             imageData[bag]["Analogic"] = analogicData
@@ -864,9 +914,9 @@ def imageProcessComparison():
 
     # Test Print
     # ----------------------------------------
-    for keys, values in imageData.items():
-        print(keys)
-        print(values)
+    # for keys, values in imageData.items():
+        # print(keys)
+        # print(values)
     # ----------------------------------------
     return results
 
@@ -932,10 +982,36 @@ def quickTest():
 
 def main():
     global volume
+    global extract
+    global machineCT80
+    global machine9400
+    global machine9800
+    global machine6700
+    global machineAnalogic
+    global machineCTiX
 
     username = input("Enter TIL Username: ")
     password = input("Enter TIL Password: ")
     volume = input("Enter EDS Volume Number: ")
+    extract = int(input("Enter 1 to extract EDS machine data and screenshots or 0 to just extract machine data: "))
+
+    machines = ("CT80", "9400", "9800", "6700", "Analogic", "CTiX")
+
+    for i in range(6):
+        response = input(machines[i] + " is currently included in the QA process, enter 'N' to exclude the " + machines[i] + " else, press ENTER")
+        if i == 0 and response == 'N':
+            machineCT80 = 'N'
+        elif i == 1 and response == 'N':
+            machine9400 = 'N'
+        elif i == 2 and response == 'N':
+            machine9800 = 'N'
+        elif i == 3 and response == 'N':
+            machine6700 = 'N'
+        elif i == 4 and response == 'N':
+            machineAnalogic = 'N'
+        elif i == 5 and response == 'N':
+            machineCTiX = 'N'
+
 
     createFolders(volume)
 
