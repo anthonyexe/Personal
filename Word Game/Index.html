@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Word Games</title>
+	
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header>
+		<nav>
+			<ol>
+					<a href="Index.html"><img class="home" src="home.png"></a>
+			</ol>
+		</nav>
+	</header>
+	<hr>
+	<div id="quiz">
+		<center><h1>Word Games</h1></center>
+	</div>
+
+	<center>
+		<button class="songChoices" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button>
+		<button class="songChoices" name="three_letter_words" id="three_letter_words" onclick="jsonData(this)">3 Letters</button>
+		<form onSubmit="return false">
+			<input type="text" id="userInput" name="userInput" autocomplete="off"><br>
+			<input type="submit" class="gameButtons" id="submit" value="Submit" onclick="checkInput()"><br>
+		</form>
+		<div id="timerDiv"></div>
+		<div id="resultsDiv">
+			<button class="songChoices" id="getResults" onclick="getResults()">Get Results</button>
+		</div>
+	</center>
+
+	<footer>
+		By Anthony D'Alessandro
+	</footer>
+	<script src="script.js"></script>
+</body>
+</html>
