@@ -1,6 +1,12 @@
 // Anthony D'Alessandro
+var wordLength = 0;
 const inputWords = new Map();
 const threeLetterMap = new Map();
+
+document.getElementById("userInput").addEventListener('keyup', function(e) {
+    if (this.value.length === wordLength)
+        checkInput();
+});
 
 function timer() {
     let paragraph = document.createElement("p");
@@ -16,7 +22,10 @@ function timer() {
     }, 1000);
 }
 
-async function jsonData(length) {
+async function jsonData(length, charLimit) {
+    wordLength = charLimit;
+    var userInput = document.getElementById("userInput");
+    userInput.setAttribute("maxlength", charLimit);
     const fileName = length.id + '.json';
     console.log(fileName);
     const response = await fetch(fileName);
@@ -37,16 +46,18 @@ function checkInput() {
     var resultButton = document.getElementById("submit");
     if (!inputWords.has(input) && threeLetterMap.has(input)) {
         inputWords.set(input, 1);
-        resultButton.style.background = 'linear-gradient(to bottom right, #6eef4780, #42f80a80)';
+        /*resultButton.style.background = 'linear-gradient(to bottom right, #6eef4780, #42f80a80)';
         setTimeout(function() {
             resultButton.style.background = 'linear-gradient(to bottom right, #EF4765, #FF9A5A)';
-        }, 125);
+        }, 125);*/
     }
     else {
+        /*
         resultButton.classList.remove("gameButtons");
         void resultButton.offsetWidth;
         resultButton.classList.add("gameButtons");
         //resultButton.style.animation = "buttonShake .2s";
+        */
         console.log("wrong/repeat word");
         
     }

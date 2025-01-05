@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Word Games</title>
+	<title>Word Game</title>
 	
 	<link rel="stylesheet" href="style.css">
 </head>
@@ -16,15 +16,16 @@
 	</header>
 	<hr>
 	<div id="quiz">
-		<center><h1>Word Games</h1></center>
+		<center><h1>Word Game</h1></center>
 	</div>
 
 	<center>
-		<button class="songChoices" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button>
-		<button class="songChoices" name="three_letter_words" id="three_letter_words" onclick="jsonData(this)">3 Letters</button>
+		<button class="songChoices" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button><br>
+		<button class="songChoices" name="three_letter_words" id="three_letter_words" onclick="jsonData(this, 3)">3 Letters</button>
+		<button class="songChoices" name="four_letter_words" id="four_letter_words" onclick="jsonData(this, 4)">4 Letters</button>
+		<button class="songChoices" name="five_letter_words" id="five_letter_words" onclick="jsonData(this, 5)">5 Letters</button>
 		<form onSubmit="return false">
 			<input type="text" id="userInput" name="userInput" autocomplete="off"><br>
-			<input type="submit" class="gameButtons" id="submit" value="Submit" onclick="checkInput()"><br>
 		</form>
 		<div id="timerDiv"></div>
 		<div id="resultsDiv">

@@ -107,6 +107,10 @@ footer {
     background: grey;
   }
 
+  #submit {
+    visibility: hidden;
+  }
+
 
 .dropdown {
   position: relative;
