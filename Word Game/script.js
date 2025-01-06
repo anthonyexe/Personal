@@ -1,12 +1,15 @@
 // Anthony D'Alessandro
 var wordLength = 0;
+var wordLengthString = '';
+var letterChoice = '';
 const inputWords = new Map();
-const threeLetterMap = new Map();
+const letterMap = new Map();
 
-document.getElementById("userInput").addEventListener('keyup', function(e) {
-    if (this.value.length === wordLength)
-        checkInput();
-});
+const letterElements = document.getElementsByClassName("letterChoices");
+const wordLengthElements = document.getElementsByClassName("wordLengthChoices");
+
+
+
 
 function timer() {
     let paragraph = document.createElement("p");
@@ -22,47 +25,81 @@ function timer() {
     }, 1000);
 }
 
-async function jsonData(length, charLimit) {
+function letterSelect(element) {
+    letterChoice = element.id;
+    console.log(letterChoice);
+    for (let i = 0; i < letterElements.length; i++) {
+        var currentButton = letterElements.item(i);
+        if (element.id === currentButton.id) {
+            currentButton.style.color = 'white';
+            currentButton.style.opacity = '1.0';
+        }
+        else {
+            currentButton.style.color = 'grey';
+            currentButton.style.opacity = '0.5';
+        }
+            
+    }
+}
+
+function wordLengthSelect(element, charLimit) {
+    wordLengthString = element.id;
     wordLength = charLimit;
-    var userInput = document.getElementById("userInput");
-    userInput.setAttribute("maxlength", charLimit);
-    const fileName = length.id + '.json';
+    console.log(wordLengthString);
+    console.log(wordLength);
+
+    for (let i = 0; i < wordLengthElements.length; i++) {
+        var currentElement = wordLengthElements.item(i);
+        if (element.id === currentElement.id) {
+            currentElement.style.color = 'white';
+            currentElement.style.opacity = '1.0';
+        }
+        else {
+            currentElement.style.color = 'grey';
+            currentElement.style.opacity = '0.5';
+        }
+    }
+}
+
+async function jsonData() {
+    const fileName = wordLengthString + '.json';
     console.log(fileName);
     const response = await fetch(fileName);
     const data = await response.json();
     var results = JSON.parse(JSON.stringify(data));
 
     for (var x in results) {
-        threeLetterMap.set(x, 1);
+        if (x.charAt(0) === letterChoice)
+            letterMap.set(x, 1);
     }
 
-    console.log(threeLetterMap.size);
+    console.log(letterMap.size);
 }
 
 function checkInput() {
     var input = document.getElementById("userInput").value;
     console.log(input);
-
-    var resultButton = document.getElementById("submit");
-    if (!inputWords.has(input) && threeLetterMap.has(input)) {
+    if (!inputWords.has(input) && letterMap.has(input)) {
         inputWords.set(input, 1);
-        /*resultButton.style.background = 'linear-gradient(to bottom right, #6eef4780, #42f80a80)';
-        setTimeout(function() {
-            resultButton.style.background = 'linear-gradient(to bottom right, #EF4765, #FF9A5A)';
-        }, 125);*/
     }
     else {
-        /*
-        resultButton.classList.remove("gameButtons");
-        void resultButton.offsetWidth;
-        resultButton.classList.add("gameButtons");
-        //resultButton.style.animation = "buttonShake .2s";
-        */
         console.log("wrong/repeat word");
-        
     }
     document.getElementById("userInput").value='';
     console.log(inputWords);
+}
+
+function play() {
+    document.getElementById("letter-buttons").remove();
+    document.getElementById("word-length-buttons").remove();
+    var userInput = document.getElementById("userInput");
+    userInput.disabled = false;
+    userInput.setAttribute("maxlength", wordLength);
+    userInput.addEventListener('keyup', function(e) {
+        if (this.value.length === wordLength)
+            checkInput();
+    });
+    jsonData();
 }
 
 function getResults() {

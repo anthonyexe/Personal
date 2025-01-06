@@ -14,9 +14,9 @@ footer {
   font-weight: bold;
 }
 
-.songChoices {
-    background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
-    border: 0;
+.regularButtons {
+  background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+    border: 0px;
     border-radius: 12px;
     color: #FFFFFF;
     cursor: pointer;
@@ -35,6 +35,66 @@ footer {
     touch-action: manipulation;
     white-space: nowrap;
     margin: 8px;
+}
+
+.wordLengthChoices {
+    background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+    border: 2px solid;
+    border-color: black;
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 2.5;
+    outline: transparent;
+    padding: 0 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    margin: 8px;
+  }
+
+  .letterChoices {
+    background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+    border: 2px solid;
+    border-color: black;
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 2.5;
+    outline: transparent;
+    padding: 0 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    margin: 8px;
+  }
+
+  .letterChoices:hover {
+    color: black !important;
+    opacity: 1.0 !important;
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+  }
+
+  .wordLengthChoices:hover {
+    color: black !important;
+    opacity: 1.0 !important;
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
   }
   
   .songChoices:not([disabled]):focus {
@@ -105,6 +165,18 @@ footer {
 
   .gameButtons:disabled {
     background: grey;
+  }
+
+  .letter-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .word-length-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   #submit {

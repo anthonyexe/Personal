@@ -19,17 +19,50 @@
 		<center><h1>Word Game</h1></center>
 	</div>
 
+	<div id="letter-buttons" class="letter-buttons">
+		<button id="a" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">A</button>
+		<button id="b" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">B</button>
+		<button id="c" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">C</button>
+		<button id="d" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">D</button>
+		<button id="e" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">E</button>
+		<button id="f" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">F</button>
+		<button id="g" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">G</button>
+		<button id="h" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">H</button>
+		<button id="i" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">I</button>
+		<button id="j" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">J</button>
+		<button id="k" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">K</button>
+		<button id="l" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">L</button>
+		<button id="m" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">M</button>
+		<button id="n" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">N</button>
+		<button id="o" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">O</button>
+		<button id="p" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">P</button>
+		<button id="q" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">Q</button>
+		<button id="r" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">R</button>
+		<button id="s" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">S</button>
+		<button id="t" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">T</button>
+		<button id="u" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">U</button>
+		<button id="v" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">V</button>
+		<button id="w" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">W</button>
+		<button id="x" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">X</button>
+		<button id="y" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">Y</button>
+		<button id="z" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">Z</button>
+	</div>
+
 	<center>
-		<button class="songChoices" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button><br>
-		<button class="songChoices" name="three_letter_words" id="three_letter_words" onclick="jsonData(this, 3)">3 Letters</button>
-		<button class="songChoices" name="four_letter_words" id="four_letter_words" onclick="jsonData(this, 4)">4 Letters</button>
-		<button class="songChoices" name="five_letter_words" id="five_letter_words" onclick="jsonData(this, 5)">5 Letters</button>
+		<button class="regularButtons" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button><br>
+		<div id="word-length-buttons" class="word-length-buttons">
+			<button class="wordLengthChoices" name="three_letter_words" id="three_letter_words" onclick="wordLengthSelect(this, 3)">3 Letters</button>
+			<button class="wordLengthChoices" name="four_letter_words" id="four_letter_words" onclick="wordLengthSelect(this, 4)">4 Letters</button>
+			<button class="wordLengthChoices" name="five_letter_words" id="five_letter_words" onclick="wordLengthSelect(this, 5)">5 Letters</button><br>
+		</div>
+		
+		<button class="regularButtons" name="play" id="play" onclick="play()">Play</button><br>
 		<form onSubmit="return false">
-			<input type="text" id="userInput" name="userInput" autocomplete="off"><br>
+			<input type="text" id="userInput" name="userInput" autocomplete="off" disabled="true"><br>
 		</form>
 		<div id="timerDiv"></div>
 		<div id="resultsDiv">
-			<button class="songChoices" id="getResults" onclick="getResults()">Get Results</button>
+			<button class="regularButtons" id="getResults" onclick="getResults()">Get Results</button>
 		</div>
 	</center>
 
