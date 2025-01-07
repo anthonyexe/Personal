@@ -2,28 +2,14 @@
 var wordLength = 0;
 var wordLengthString = '';
 var letterChoice = '';
+var timeSelection = 0;
 const inputWords = new Map();
 const letterMap = new Map();
 
 const letterElements = document.getElementsByClassName("letterChoices");
-const wordLengthElements = document.getElementsByClassName("wordLengthChoices");
+const wordLengthElements = document.querySelectorAll("#three_letter_words, #four_letter_words, #five_letter_words");
+const timerElements = document.querySelectorAll('#one_minute, #two_minutes, #three_minutes');
 
-
-
-
-function timer() {
-    let paragraph = document.createElement("p");
-    paragraph.id = "timer";
-    document.getElementById("timerDiv").append(paragraph);
-    var sec = 60;
-    var timer = setInterval(function() {
-        document.getElementById("timer").innerHTML = '00:' + sec;
-        sec--;
-        if (sec < 0) {
-            clearInterval(timer);
-        }
-    }, 1000);
-}
 
 function letterSelect(element) {
     letterChoice = element.id;
@@ -50,6 +36,22 @@ function wordLengthSelect(element, charLimit) {
 
     for (let i = 0; i < wordLengthElements.length; i++) {
         var currentElement = wordLengthElements.item(i);
+        if (element.id === currentElement.id) {
+            currentElement.style.color = 'white';
+            currentElement.style.opacity = '1.0';
+        }
+        else {
+            currentElement.style.color = 'grey';
+            currentElement.style.opacity = '0.5';
+        }
+    }
+}
+
+function setTimer(element, time) {
+    timeSelection = time;
+    console.log(timeSelection);
+    for (let i = 0; i < timerElements.length; i++) {
+        var currentElement = timerElements.item(i);
         if (element.id === currentElement.id) {
             currentElement.style.color = 'white';
             currentElement.style.opacity = '1.0';
@@ -89,9 +91,41 @@ function checkInput() {
     console.log(inputWords);
 }
 
+function timer() {
+    let paragraph = document.createElement("p");
+    paragraph.id = "timer";
+    document.getElementById("timerDiv").append(paragraph);
+    var sec = 60;
+    var timer = setInterval(function() {
+        document.getElementById("timer").innerHTML = '00:' + sec;
+        sec--;
+        if (sec < 0) {
+            clearInterval(timer);
+        }
+    }, 1000);
+}
+
+function newTimer() {
+    let paragraph = document.createElement("p");
+    paragraph.id = "newTimer";
+    document.getElementById("timerDiv").append(paragraph);
+    
+    var timer = setInterval(function() {
+        const minutes = Math.floor(timeSelection / 60);
+        let seconds = timeSelection % 60;
+        if (seconds < 0)
+            clearInterval(timer);
+        if (seconds < minutes)
+            seconds = '0' + seconds;
+        document.getElementById("newTimer").innerHTML = `${minutes}:${seconds}`;
+        timeSelection--;
+    }, 1000);
+}
+
 function play() {
     document.getElementById("letter-buttons").remove();
     document.getElementById("word-length-buttons").remove();
+    document.getElementById("timer-buttons").remove();
     var userInput = document.getElementById("userInput");
     userInput.disabled = false;
     userInput.setAttribute("maxlength", wordLength);
@@ -100,6 +134,7 @@ function play() {
             checkInput();
     });
     jsonData();
+    newTimer();
 }
 
 function getResults() {

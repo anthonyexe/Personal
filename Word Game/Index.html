@@ -49,11 +49,17 @@
 	</div>
 
 	<center>
-		<button class="regularButtons" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button><br>
+		<button style="display: none" class="regularButtons" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button><br>
 		<div id="word-length-buttons" class="word-length-buttons">
 			<button class="wordLengthChoices" name="three_letter_words" id="three_letter_words" onclick="wordLengthSelect(this, 3)">3 Letters</button>
 			<button class="wordLengthChoices" name="four_letter_words" id="four_letter_words" onclick="wordLengthSelect(this, 4)">4 Letters</button>
 			<button class="wordLengthChoices" name="five_letter_words" id="five_letter_words" onclick="wordLengthSelect(this, 5)">5 Letters</button><br>
+		</div>
+
+		<div id="timer-buttons" class="word-length-buttons">
+			<button class="wordLengthChoices" name="one_minute" id="one_minute" onclick="setTimer(this, 60)">1 Minute</button>
+			<button class="wordLengthChoices" name="two_minutes" id="two_minutes" onclick="setTimer(this, 120)">2 Minutes</button>
+			<button class="wordLengthChoices" name="three_minutes" id="three_minutes" onclick="setTimer(this, 180)">3 Minutes</button><br>
 		</div>
 		
 		<button class="regularButtons" name="play" id="play" onclick="play()">Play</button><br>
