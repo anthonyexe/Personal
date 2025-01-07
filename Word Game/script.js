@@ -123,9 +123,20 @@ function newTimer() {
 }
 
 function play() {
+    var gameCriteria = document.getElementById("gameCriteria");
+    gameCriteria.innerHTML = "" + wordLength + " letter words that start with " + "'" + letterChoice.toUpperCase() + "'";
     document.getElementById("letter-buttons").remove();
     document.getElementById("word-length-buttons").remove();
     document.getElementById("timer-buttons").remove();
+    document.getElementById("play").remove();
+    var instructionElements = document.querySelectorAll("#instruction1, #instruction2, #instruction3");
+    console.log(instructionElements);
+
+    for (let i = 0; i < instructionElements.length; i++) {
+        var currentElement = instructionElements.item(i);
+        currentElement.remove();
+    }
+
     var userInput = document.getElementById("userInput");
     userInput.disabled = false;
     userInput.setAttribute("maxlength", wordLength);
@@ -134,7 +145,7 @@ function play() {
             checkInput();
     });
     jsonData();
-    newTimer();
+    //newTimer();
 }
 
 function getResults() {
