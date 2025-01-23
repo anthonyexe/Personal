@@ -717,11 +717,18 @@ def _6700OCR(imagePath):
                     data.append(0)
             # For all other values, simply append the integer values of the text to the data list
             else:
-                #if "I" in text or "l" in text:
-                text = text.replace("I", "1").replace("l", "1").replace("\n", "").replace("(", "").replace(")", "")
-                #print(text)
-                data.append(int(text))
+                if text == '':
+                    newFileImage = img[320:335, 1620:1690]
+                    newFileResized = cv2.resize(newFileImage, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
+                    newBW = cv2.threshold(newFileResized, 170, 255, cv2.THRESH_BINARY)[1]
+                    newText = pytesseract.image_to_string(newBW, config=custom_config)
 
+                    newText = newText.replace("I", "1").replace("l", "1").replace("\n", "").replace("(", "").replace(")", "")
+                    data.append(int(newText))
+                else:
+                    # if "I" in text or "l" in text:
+                    text = text.replace("I", "1").replace("l", "1").replace("\n", "").replace("(", "").replace(")", "")
+                    data.append(int(text))
     return data
 
 
