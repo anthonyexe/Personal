@@ -105,26 +105,43 @@ function timer() {
     }, 1000);
 }
 
+function endGame() {
+    document.getElementById("userInput").disabled = true;
+    document.getElementById("newTimer").remove();
+    getResults();
+
+}
+
 function newTimer() {
     let paragraph = document.createElement("p");
     paragraph.id = "newTimer";
     document.getElementById("timerDiv").append(paragraph);
     
-    var timer = setInterval(function() {
-        const minutes = Math.floor(timeSelection / 60);
-        let seconds = timeSelection % 60;
-        if (seconds < 0)
-            clearInterval(timer);
-        if (seconds < minutes)
-            seconds = '0' + seconds;
-        document.getElementById("newTimer").innerHTML = `${minutes}:${seconds}`;
-        timeSelection--;
+    var timer = timeSelection;
+    var minutes, seconds;
+    var timeInterval = setInterval(function() {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        document.getElementById("newTimer").innerHTML = minutes + ": " + seconds;
+
+        if (--timer < 0) {
+            clearInterval(timeInterval);
+            endGame();
+        }
     }, 1000);
 }
 
 function play() {
     var gameCriteria = document.getElementById("gameCriteria");
     gameCriteria.innerHTML = "" + wordLength + " letter words that start with " + "'" + letterChoice.toUpperCase() + "'";
+    var userInput = document.getElementById("userInput");
+    userInput.hidden = false;
+    userInput.disabled = false;
+    userInput.focus();
     document.getElementById("letter-buttons").remove();
     document.getElementById("word-length-buttons").remove();
     document.getElementById("timer-buttons").remove();
@@ -137,15 +154,13 @@ function play() {
         currentElement.remove();
     }
 
-    var userInput = document.getElementById("userInput");
-    userInput.disabled = false;
     userInput.setAttribute("maxlength", wordLength);
     userInput.addEventListener('keyup', function(e) {
         if (this.value.length === wordLength)
             checkInput();
     });
     jsonData();
-    //newTimer();
+    newTimer();
 }
 
 function getResults() {
