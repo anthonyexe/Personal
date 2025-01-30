@@ -91,20 +91,6 @@ function checkInput() {
     console.log(inputWords);
 }
 
-function timer() {
-    let paragraph = document.createElement("p");
-    paragraph.id = "timer";
-    document.getElementById("timerDiv").append(paragraph);
-    var sec = 60;
-    var timer = setInterval(function() {
-        document.getElementById("timer").innerHTML = '00:' + sec;
-        sec--;
-        if (sec < 0) {
-            clearInterval(timer);
-        }
-    }, 1000);
-}
-
 function endGame() {
     document.getElementById("userInput").disabled = true;
     document.getElementById("newTimer").remove();
