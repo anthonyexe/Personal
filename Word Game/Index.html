@@ -49,7 +49,7 @@
 		<button id="z" class="letterChoices" style="margin: 4px" onclick="letterSelect(this)">Z</button>
 	</div>
 
-	<button style="display: none" class="regularButtons" name="startTimer" id="startTimer" onclick="timer()">Start Timer</button><br>
+	
 	<h3 id="instruction2" class="instructions"style="text-align: center; text-decoration: underline">Select the length of the words</h3>
 	<div id="word-length-buttons" class="word-length-buttons">
 		<button class="wordLengthChoices" name="three_letter_words" id="three_letter_words" onclick="wordLengthSelect(this, 3)">3 Letters</button>
@@ -59,6 +59,7 @@
 
 	<h3 id="instruction3" class="instructions" style="text-align: center; text-decoration: underline">Select the timer length for the challenge</h3>
 	<div id="timer-buttons" class="word-length-buttons">
+		<button class="wordLengthChoices" name="five_seconds" id="five_seconds" onclick="setTimer(this, 5)">Test (5s)</button>
 		<button class="wordLengthChoices" name="one_minute" id="one_minute" onclick="setTimer(this, 60)">1 Minute</button>
 		<button class="wordLengthChoices" name="two_minutes" id="two_minutes" onclick="setTimer(this, 120)">2 Minutes</button>
 		<button class="wordLengthChoices" name="three_minutes" id="three_minutes" onclick="setTimer(this, 180)">3 Minutes</button><br>
@@ -66,7 +67,7 @@
 	
 	<center>
 		<h4 id="gameCriteria"></h4>
-		<button class="regularButtons" name="play" id="play" onclick="play()">Play</button><br>
+		<button class="wordLengthChoices" name="play" id="play" style="background: gray" disabled="disabled" onclick="play()">Play</button><br>
 		<form onSubmit="return false">
 			<input type="text" id="userInput" name="userInput" autocomplete="off" hidden="true" disabled="true"><br>
 		</form>
