@@ -101,23 +101,6 @@ async function jsonData() {
 
     console.log(wordSet.size);
 }
-//Handle each guess/answer from the user during the game and displays it for the user to see.
-function checkInput() {
-    var input = document.getElementById("userInput").value;
-    var currentWord = document.createElement("span");
-    currentWord.append(input + ", ");
-    document.getElementById("guesses").append(currentWord);
-    document.getElementById("userInput").value='';
-}
-/*This function is called when the game timer runs out and disables the input form and
-  removes the timer.
-*/
-function endGame() {
-    document.getElementById("userInput").disabled = true;
-    document.getElementById("newTimer").remove();
-    getResults();
-
-}
 //Creates the game timer and counts down from the time specified by the user.
 function newTimer() {
     let paragraph = document.createElement("p");
@@ -140,6 +123,14 @@ function newTimer() {
             endGame();
         }
     }, 1000);
+}
+//Handle each guess/answer from the user during the game and displays it for the user to see.
+function checkInput() {
+    var input = document.getElementById("userInput").value;
+    var currentWord = document.createElement("span");
+    currentWord.append(input + ", ");
+    document.getElementById("guesses").append(currentWord);
+    document.getElementById("userInput").value='';
 }
 /*This function essentially "starts" the game and removes/sets up the necessary elements.
 */
@@ -173,7 +164,6 @@ function play() {
             checkInput();
     });
 }
-
 function getResults() {
 
     var resultElements = document.getElementById("guesses").querySelectorAll("*");
@@ -193,5 +183,27 @@ function getResults() {
         count++;
     });
 
-    document.getElementById("resultsDiv").append(inputWords.size);
+    document.getElementById("resultsDiv").append("Score: " + inputWords.size);
+}
+/*This function is called when the game timer runs out and disables the input form and
+  removes the timer.
+*/
+function endGame() {
+    document.getElementById("userInput").disabled = true;
+    document.getElementById("newTimer").remove();
+    getResults();
+
+    var replayButton = document.createElement("button");
+    replayButton.className = "wordLengthChoices";
+    replayButton.id = "replay";
+    replayButton.innerHTML = "Replay";
+    var newGameButton = document.createElement("button");
+    newGameButton.className = "wordLengthChoices";
+    newGameButton.id = "newGame";
+    newGameButton.innerHTML = "New Game";
+
+    document.getElementById("endButtons").append(replayButton);
+    document.getElementById("endButtons").append(newGameButton);
+
+    
 }
