@@ -14,6 +14,10 @@ const wordLengthElements = document.querySelectorAll("#three_letter_words, #four
 const timerElements = document.querySelectorAll('#five_seconds, #one_minute, #two_minutes, #three_minutes');
 const playButton = document.getElementById("play");
 
+function reloadPage() {
+    window.location.reload();
+}
+
 //Handle when a user selects the letter that the words will start with.
 function letterSelect(element) {
     letterChoice = element.id;
@@ -151,6 +155,9 @@ function play() {
     var guesses = document.createElement("p");
     guesses.id = "guesses";
     document.getElementById("resultsDiv").append(guesses);
+    var score = document.createElement("p");
+    score.id = "score";
+    document.getElementById("resultsDiv").append(score);
     var instructionElements = document.querySelectorAll("#instruction1, #instruction2, #instruction3");
 
     for (let i = 0; i < instructionElements.length; i++) {
@@ -165,7 +172,6 @@ function play() {
     });
 }
 function getResults() {
-
     var resultElements = document.getElementById("guesses").querySelectorAll("*");
     var count = 0;
     resultElements.forEach(element => {
@@ -182,8 +188,8 @@ function getResults() {
         }
         count++;
     });
-
-    document.getElementById("resultsDiv").append("Score: " + inputWords.size);
+    
+    document.getElementById("score").append("Score: " + inputWords.size + " words in " + timeSelection / 60 + " minute(s)");
 }
 /*This function is called when the game timer runs out and disables the input form and
   removes the timer.
@@ -197,13 +203,27 @@ function endGame() {
     replayButton.className = "wordLengthChoices";
     replayButton.id = "replay";
     replayButton.innerHTML = "Replay";
+    replayButton.addEventListener('click', replay);
+
     var newGameButton = document.createElement("button");
     newGameButton.className = "wordLengthChoices";
     newGameButton.id = "newGame";
     newGameButton.innerHTML = "New Game";
+    newGameButton.addEventListener('click', reloadPage);
 
     document.getElementById("endButtons").append(replayButton);
     document.getElementById("endButtons").append(newGameButton);
+}
 
-    
+function replay() {
+    inputWords.clear();
+    document.getElementById("replay").remove();
+    document.getElementById("newGame").remove();
+
+    document.getElementById("guesses").innerHTML = "";
+    document.getElementById("score").innerHTML = "";
+
+    document.getElementById("userInput").disabled = false;
+    document.getElementById("userInput").focus();
+    newTimer();
 }
