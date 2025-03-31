@@ -13,9 +13,42 @@ const letterElements = document.getElementsByClassName("letterChoices");
 const wordLengthElements = document.querySelectorAll("#three_letter_words, #four_letter_words, #five_letter_words");
 const timerElements = document.querySelectorAll('#five_seconds, #one_minute, #two_minutes, #three_minutes');
 const playButton = document.getElementById("play");
+const checkBox = document.getElementById("checkbox");
+
+checkBox.addEventListener('change', darkMode);
 
 function reloadPage() {
     window.location.reload();
+}
+
+function darkMode() {
+    if (checkBox.checked) {
+        document.body.style.background = "#030712";
+        document.body.style.color = "white";
+        //document.getElementById("header").style.background = "white";
+        for (let i = 0; i < letterElements.length; i++) {
+            letterElements.item(i).style.border = "2px solid white";
+        }
+
+        var wordLengthButtons = document.getElementsByClassName("wordLengthChoices");
+        for (let i = 0; i < wordLengthButtons.length; i++) {
+            wordLengthButtons.item(i).style.border = "2px solid white";
+        }
+        console.log("Checked");
+    }
+        
+    else {
+        document.body.style.background = "white";
+        document.body.style.color = "black";
+        for (let i = 0; i < letterElements.length; i++) {
+            letterElements.item(i).style.border = "2px solid black";
+        }
+
+        var wordLengthButtons = document.getElementsByClassName("wordLengthChoices");
+        for (let i = 0; i < wordLengthButtons.length; i++) {
+            wordLengthButtons.item(i).style.border = "2px solid black";
+        }
+    }
 }
 
 //Handle when a user selects the letter that the words will start with.
@@ -210,6 +243,11 @@ function endGame() {
     newGameButton.id = "newGame";
     newGameButton.innerHTML = "New Game";
     newGameButton.addEventListener('click', reloadPage);
+
+    if (checkBox.checked) {
+        replayButton.style.border = "2px solid white";
+        newGameButton.style.border = "2px solid white";
+    }
 
     document.getElementById("endButtons").append(replayButton);
     document.getElementById("endButtons").append(newGameButton);
