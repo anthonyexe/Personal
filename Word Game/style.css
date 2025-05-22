@@ -243,6 +243,11 @@ input:checked + .slider:before {
     visibility: hidden;
   }
 
+  .guesses {
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+
 
 .dropdown {
   position: relative;

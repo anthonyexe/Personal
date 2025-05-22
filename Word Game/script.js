@@ -165,6 +165,7 @@ function newTimer() {
 function checkInput() {
     var input = document.getElementById("userInput").value;
     var currentWord = document.createElement("span");
+    currentWord.className = "guesses";
     currentWord.append(input + ", ");
     document.getElementById("guesses").append(currentWord);
     document.getElementById("userInput").value='';
@@ -176,11 +177,13 @@ function play() {
     newTimer();
     jsonData();
     var gameCriteria = document.getElementById("gameCriteria");
+    gameCriteria.style.fontSize = "1.25em";
     gameCriteria.innerHTML = "" + wordLength + " letter words that start with " + "'" + letterChoice.toUpperCase() + "'";
     var userInput = document.getElementById("userInput");
     userInput.hidden = false;
     userInput.disabled = false;
     userInput.focus();
+    document.getElementById("quiz").innerHTML = "";
     document.getElementById("letter-buttons").remove();
     document.getElementById("word-length-buttons").remove();
     document.getElementById("timer-buttons").remove();
