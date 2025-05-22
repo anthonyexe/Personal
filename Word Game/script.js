@@ -9,6 +9,11 @@ var timeBoolean = false;
 const inputWords = new Set();
 const wordSet = new Set();
 
+const lightToggle = document.getElementById("lightMode");
+const darkToggle = document.getElementById("darkMode");
+lightToggle.addEventListener('change', changeTheme);
+darkToggle.addEventListener('change', changeTheme);
+
 const letterElements = document.getElementsByClassName("letterChoices");
 const wordLengthElements = document.querySelectorAll("#three_letter_words, #four_letter_words, #five_letter_words");
 const timerElements = document.querySelectorAll('#five_seconds, #one_minute, #two_minutes, #three_minutes');
@@ -17,8 +22,59 @@ const checkBox = document.getElementById("checkbox");
 
 checkBox.addEventListener('change', darkMode);
 
+if (localStorage.getItem("darkMode") == null) {
+    lightToggle.checked = true;
+    lightToggle.disabled = true;
+    localStorage.setItem("darkMode", false);
+    console.log(localStorage.getItem("darkMode"));
+}
+console.log(localStorage.getItem("darkMode"));
 function reloadPage() {
     window.location.reload();
+}
+
+function clearStorage() {
+    localStorage.clear();
+    console.log(localStorage.getItem("darkMode"));
+}
+
+function changeTheme() {
+    console.log("changeTheme");
+    if (darkToggle.checked) {
+        console.log("changeTheme darkToggle");
+        localStorage.setItem("darkMode", true);
+        lightToggle.disabled = false;
+        lightToggle.checked = false;
+        darkToggle.disabled = true;
+        document.body.style.background = "#030712";
+        document.body.style.color = "white";
+        //document.getElementById("header").style.background = "white";
+        for (let i = 0; i < letterElements.length; i++) {
+            letterElements.item(i).style.border = "2px solid white";
+        }
+
+        var wordLengthButtons = document.getElementsByClassName("wordLengthChoices");
+        for (let i = 0; i < wordLengthButtons.length; i++) {
+            wordLengthButtons.item(i).style.border = "2px solid white";
+        }
+    }
+    else {
+        console.log("changeTheme lightToggle");
+        localStorage.setItem("darkMode", false);
+        darkToggle.disabled = false;
+        darkToggle.checked = false;
+        lightToggle.disabled = true;
+        document.body.style.background = "white";
+        document.body.style.color = "black";
+        for (let i = 0; i < letterElements.length; i++) {
+            letterElements.item(i).style.border = "2px solid black";
+        }
+
+        var wordLengthButtons = document.getElementsByClassName("wordLengthChoices");
+        for (let i = 0; i < wordLengthButtons.length; i++) {
+            wordLengthButtons.item(i).style.border = "2px solid black";
+        }
+    }
 }
 
 function darkMode() {
